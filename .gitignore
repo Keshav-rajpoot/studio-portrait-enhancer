@@ -1,17 +1,16 @@
-# virtual environment
-.venv/
-venv/
-
-# python cache
+# Python
 __pycache__/
 *.pyc
 
-# models & weights
+# Virtual environment
+.venv/
+
+# Model weights
 models/
 gfpgan/
 *.pth
 
-# outputs
+# Outputs
 samples/output/
 
 # OS
