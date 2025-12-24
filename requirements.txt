@@ -1,0 +1,18 @@
+# Core
+numpy
+opencv-python
+
+# Face detection & segmentation
+mediapipe
+
+# Deep Learning
+torch
+torchvision
+
+# Face enhancement (GFPGAN)
+gfpgan
+basicsr
+
+# Utilities
+tqdm
+Pillow

@@ -1,0 +1,19 @@
+# virtual environment
+.venv/
+venv/
+
+# python cache
+__pycache__/
+*.pyc
+
+# models & weights
+models/
+gfpgan/
+*.pth
+
+# outputs
+samples/output/
+
+# OS
+.DS_Store
+Thumbs.db
