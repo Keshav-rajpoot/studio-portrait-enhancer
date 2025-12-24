@@ -1,65 +1,57 @@
-# 🎥 Studio-Quality Portrait Enhancement Pipeline
+# 🎨 Studio-Quality Portrait Enhancement Pipeline
 
-## 📌 Overview
+This project converts **raw human portrait images** (captured using mobile cameras in uncontrolled conditions) into **studio-quality portrait images** using a **fast, production-oriented computer vision + deep learning pipeline**.
 
-This project converts **raw human portrait images** captured in uncontrolled conditions (mobile camera, low light, cluttered background, motion blur) into **studio-quality portraits** using a **hybrid Computer Vision + Deep Learning pipeline**.
+The solution focuses on:
 
-The system enhances facial clarity, adds professional background bokeh, improves contrast and sharpness, and preserves **natural skin texture and original facial identity**, while maintaining **fast CPU-based inference**.
-
----
-
-## 🎯 Problem Statement
-
-Given a raw portrait image:
-
-* Motion blur
-* Uneven lighting
-* Low contrast
-* Noisy background
-
-Generate a **studio-quality portrait** with:
-
-* Clear and sharp face
-* Natural skin texture
-* Background blur (bokeh effect)
-* Identity preservation
-* Fast inference performance
+* Preserving **facial identity**
+* Maintaining **natural skin texture**
+* Achieving **professional portrait aesthetics**
+* Keeping **fast inference performance**
 
 ---
 
-## 🧠 Solution Approach (Pipeline Design)
+## 🚀 Features
+
+✔ Motion blur handling (when present)
+✔ Identity-preserving face enhancement
+✔ Natural skin texture preservation
+✔ Background blur (portrait / bokeh effect)
+✔ Improved contrast and sharpness
+✔ Clean, modular, production-ready codebase
+
+---
+
+## 🧠 Pipeline Overview
 
 ```
 Input Image
-   ↓
-Basic Image Enhancement (Contrast + Sharpness)
    ↓
 Face Detection (MediaPipe)
    ↓
 Face Enhancement (GFPGAN)
    ↓
-Human Segmentation
+Background Segmentation
    ↓
-Background Blur (Portrait/Bokeh Effect)
+Background Blur (Bokeh)
    ↓
-Final Studio-Quality Output
+Contrast & Sharpness Enhancement
+   ↓
+Studio-Quality Output
 ```
-
-Each stage is modular, optimized, and production-oriented.
 
 ---
 
-## 🔧 Technologies Used
+## 🛠️ Tech Stack
 
-| Component        | Technology                    |
-| ---------------- | ----------------------------- |
-| Language         | Python 3.10                   |
-| Image Processing | OpenCV                        |
-| Face Detection   | MediaPipe                     |
-| Face Enhancement | GFPGAN                        |
-| Deep Learning    | PyTorch                       |
-| Segmentation     | MediaPipe Selfie Segmentation |
-| Environment      | CPU (Fast inference)          |
+| Component        | Tool        |
+| ---------------- | ----------- |
+| Language         | Python 3.10 |
+| Computer Vision  | OpenCV      |
+| Face Detection   | MediaPipe   |
+| Face Enhancement | GFPGAN      |
+| Deep Learning    | PyTorch     |
+| Image Processing | NumPy       |
 
 ---
 
@@ -68,35 +60,46 @@ Each stage is modular, optimized, and production-oriented.
 ```
 studio-portrait-enhancer/
 │
-├── app.py                     # Entry point
-├── requirements.txt           # Dependencies
+├── app.py                  # Entry point
+├── requirements.txt        # Dependencies
 ├── README.md
 │
 ├── src/
-│   ├── __init__.py
-│   ├── post_process.py        # Contrast & sharpness enhancement
-│   ├── face_detect.py         # Face detection
-│   ├── face_enhance.py        # GFPGAN face enhancement
-│   ├── background_blur.py     # Portrait bokeh
-│   └── pipeline.py            # End-to-end pipeline
+│   ├── face_detect.py      # Face detection
+│   ├── face_enhance.py     # GFPGAN-based face enhancement
+│   ├── background_blur.py # Portrait bokeh effect
+│   ├── post_process.py    # Contrast & sharpness
+│   └── pipeline.py        # Full pipeline orchestration
 │
-├── models/
-│   └── gfpgan/
-│       └── GFPGANv1.4.pth     # Pretrained weights
-│
-└── samples/
-    ├── input/                 # Raw images
-    └── output/                # Enhanced images
+├── samples/
+│   └── input/              # Raw input images
 ```
+
+> ⚠️ **Model weights and generated outputs are intentionally excluded from the repository** to keep the repo lightweight and GitHub-compliant.
 
 ---
 
-## ⚙️ Setup Instructions
+## 📦 Model Weights (Required)
+
+This project uses **GFPGAN v1.4** for face enhancement.
+
+Download the model manually and place it here:
+
+```
+models/gfpgan/GFPGANv1.4.pth
+```
+
+📥 Official source:
+[https://github.com/TencentARC/GFPGAN](https://github.com/TencentARC/GFPGAN)
+
+---
+
+## ▶️ How to Run
 
 ### 1️⃣ Create Virtual Environment
 
 ```bash
-py -3.10 -m venv .venv
+python -m venv .venv
 .venv\Scripts\activate
 ```
 
@@ -106,96 +109,50 @@ py -3.10 -m venv .venv
 pip install -r requirements.txt
 ```
 
-If PyTorch fails:
+### 3️⃣ Add Input Images
 
-```bash
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-```
-
----
-
-## ▶️ Run the Pipeline
-
-Place raw portrait images (`.jpg` / `.png`) inside:
+Place `.jpg` or `.png` images inside:
 
 ```
 samples/input/
 ```
 
-Run:
+### 4️⃣ Run the Pipeline
 
 ```bash
 python app.py
 ```
 
-Enhanced images will be saved automatically in:
+Enhanced images will be generated with:
 
-```
-samples/output/
-```
-
----
-
-## ✅ Key Features & Enhancements
-
-### ✔ Face-Aware Enhancement
-
-* Enhancements are **applied only to the face region**
-* Prevents over-processing of background
-* Preserves identity and skin texture
-
-### ✔ Natural Skin Preservation
-
-* No plastic or over-smoothed faces
-* GFPGAN used with safety guards and controlled blending
-
-### ✔ Professional Portrait Bokeh
-
-* Human segmentation–based background blur
-* Smooth feathered edges for studio look
-
-### ✔ Fast Inference
-
-* CPU-only execution
-* Optimized, modular pipeline
-* Suitable for real-time or batch usage
+* Improved face clarity
+* Natural skin tones
+* Studio-style background blur
 
 ---
 
-## 🧪 Edge Case Handling
+## ⚡ Performance Notes
 
-* No face detected → image returned safely
-* Invalid bounding box → skipped
-* GFPGAN failure → fallback to original face
-* Automatic clipping of face region
-
----
-
-## ⏱ Performance
-
-* **~1–2 seconds per image (CPU)**
-* No GPU required
-* Lightweight and scalable
+* Designed for **CPU inference**
+* Modular pipeline enables future GPU acceleration
+* Optimized to avoid unnecessary processing
+* Face enhancement applied **only to detected face regions**
 
 ---
 
-## 📹 Demo
+## 🎯 Design Decisions
 
-🎬 **Demo Video:**
-(Attach Google Drive link showing before/after results)
+* **No training from scratch** — uses proven pretrained models
+* **Selective enhancement** — avoids over-processing
+* **User-first output** — natural, realistic portraits
+* **Fast inference mindset** — suitable for real-world deployment
 
----
 
-## 🔗 Submission Details
+## 👨‍💻 Author
 
-* **GitHub Repository:** *(Attach your repo link here)*
-* **Demo Video:** *(Attach Google Drive link here)*
+**Keshav Singh Rajpoot**
+Machine Learning Engineer Candidate
+FOG Pvt Ltd – Round 1 Assessment
 
----
 
-## 🏁 Conclusion
-
-This project demonstrates a **production-ready portrait enhancement system** combining classical CV techniques with deep learning models.
-It focuses on **visual quality, performance, robustness, and user-centric design**, aligning closely with real-world AI imaging applications.
-
----
+Just tell me.
